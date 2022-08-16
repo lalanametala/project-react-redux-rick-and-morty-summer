@@ -1,26 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
-class Header extends React.Component {
-  render() {
-    const { username } = this.props;
-    return (
-      <h1 className="title">
-        Olá,
-        {' '}
-        { username }
-      </h1>
-    );
-  }
+import AppContext from '../context/AppContext';
+
+function Header() {
+  const { user: { username } } = useContext(AppContext);
+  return (
+    <h1 className="title">
+      Olá,
+      {' '}
+      { username }
+    </h1>
+  );
 }
 
-Header.propTypes = {
-  username: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  username: state.user.username,
-});
-
-export default connect(mapStateToProps)(Header);
+export default (Header);
