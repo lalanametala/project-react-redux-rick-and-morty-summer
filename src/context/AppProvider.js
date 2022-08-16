@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import fetchAPI from '../services/data';
 import AppContext from './AppContext';
 
