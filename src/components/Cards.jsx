@@ -1,29 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 
-class Cards extends Component {
-  render() {
-    const { characters } = this.props;
-    return (
-      <div className="border">
-        {characters.length > 0 && characters.map((character) => (
-          <div key={ `${character.id}${character.name}` } className="characteres-border">
-            <h2>{ character.name }</h2>
-            <img src={ character.image } alt={ character.name } />
-          </div>
-        ))}
-      </div>
-    );
-  }
+function Cards() {
+  const { characters } = useContext(AppContext);
+  return (
+    <div className="border">
+      {characters.length > 0 && characters.map((character) => (
+        <div key={ `${character.id}${character.name}` } className="characteres-border">
+          <h2>{ character.name }</h2>
+          <img src={ character.image } alt={ character.name } />
+        </div>
+      ))}
+    </div>
+  );
 }
 
-const mapStateToProps = (state) => ({
-  characters: state.characters.allCharacters,
-});
-
-Cards.propTypes = {
-  characters: PropTypes.arrayOf.isRequired,
-};
-
-export default connect(mapStateToProps)(Cards);
+export default Cards;
