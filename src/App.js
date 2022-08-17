@@ -1,14 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import MainPage from './pages/MainPage';
 import Login from './pages/Login';
 import './App.css';
+import AppContext from './context/AppContext';
 
-class App extends React.Component {
-  render() {
-    const { redirect } = this.props;
+function App () {
+    const { user: {redirect} } = useContext(AppContext);
     return (
       <div>
         {redirect && <Redirect from="/" to="/personagens" />}
@@ -19,15 +17,6 @@ class App extends React.Component {
       </div>
 
     );
-  }
 }
 
-const mapStateToProps = (state) => ({
-  redirect: state.user.redirect,
-});
-
-App.propTypes = {
-  redirect: PropTypes.bool.isRequired,
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
