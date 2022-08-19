@@ -1,69 +1,70 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+// import PropTypes from 'prop-types';
 import { addUser } from '../redux/actions';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-class Login extends React.Component {
-  constructor() {
-    super();
+function Login() {
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
-    this.state = {
-      password: '',
-      username: '',
-    };
-  }
+  const dispatch = useDispatch();
 
-  sendAction = () => {
-    const { username } = this.state;
-    const { addUserDispatch } = this.props;
-    addUserDispatch(username);
-  }
+  // const [userInfo, setUserInfo] = useState({
+  //   password: '',
+  //   username: '',
+  // });
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  }
+  const sendAction = () => {
+    dispatch(addUser(username));
+  };
 
-  render() {
-    const { username, password } = this.state;
-    return (
-      <div className="login-page">
-        <h1>Login</h1>
-        <div className="input-login">
-          <Input
-            label="Username: "
-            type="text"
-            onChange={ this.handleChange }
-            value={ username }
-            name="username"
-          />
-          <Input
-            label="Senha: "
-            type="password"
-            onChange={ this.handleChange }
-            value={ password }
-            name="password"
-          />
-        </div>
-        <Button
-          type="button"
-          label="Entrar"
-          onClick={ this.sendAction }
+  // const handleChange = ({ target }) => {
+  //   const { name, value } = target;
+  //   setUserInfo({
+  //     ...userInfo,
+  //     [name]: value,
+  //   });
+  // };
+
+  const handleChangeUsername = ({ target }) => {
+    const { value } = target;
+    setUsername(value);
+  };
+
+  const handleChangePassword = ({ target }) => {
+    const { value } = target;
+    setPassword(value);
+  };
+
+  return (
+    <div className="login-page">
+      <h1>Login</h1>
+      <div className="input-login">
+        <Input
+          label="Username: "
+          type="text"
+          onChange={ handleChangeUsername }
+          value={ username }
+          name="username"
+        />
+        <Input
+          label="Senha: "
+          type="password"
+          onChange={ handleChangePassword }
+          value={ password }
+          name="password"
         />
       </div>
+      <Button
+        type="button"
+        label="Entrar"
+        onClick={ sendAction }
+      />
+    </div>
 
-    );
-  }
+  );
 }
 
-Login.propTypes = {
-  addUserDispatch: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  addUserDispatch: (username) => dispatch(addUser(username)),
-});
-
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
